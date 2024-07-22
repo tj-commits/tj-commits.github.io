@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>url</title>
+</head>
+<body>
+  <h1>url redirector</h1><p>Enter a url and get a redirection link. Include the http(s)://</p>
+  <form action="#" method="get" id="form">
+    <input type="text" placeholder="https://www.google.com" id="input">
+  </form>
+  <div>The redirection url is: <span id="demo"></span></div>
+  <script>
+    document.getElementById('form').onsubmit = (e) => {
+      e.preventDefault()
+      const newUrl = "http://fst.rf.gd/go?url=" + document.getElementById('input').value
+      document.getElementById('demo').innerText = newUrl
+      navigator.clipboard.write(newUrl)
+    }
+  </script>
+</body>
+</html>
