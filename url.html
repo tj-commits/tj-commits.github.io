@@ -14,7 +14,7 @@
   <script>
     document.getElementById('form').onsubmit = (e) => {
       e.preventDefault()
-      const newUrl = "http://fst.rf.gd/go?url=" + document.getElementById('input').value
+      const newUrl = "http://fst.rf.gd/go?url=" + encodeURIComponent(document.getElementById('input').value)
       document.getElementById('demo').innerText = newUrl
       navigator.clipboard.write(newUrl)
     }
