@@ -1,0 +1,50 @@
+<title>Guess The Words</title>
+<style>
+    body{font-family:sans-serif;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        background: #333;
+        color: white;
+    }
+    button {
+        border-radius: 10px;
+        padding: 10px;
+        font-size: 18px;
+        background: red;
+        border: none;
+        outline: none;
+        color: white;
+        transition: 200ms ease-in-out;
+        width: 7em;
+        cursor: pointer;
+    }
+    button:hover {
+        background: white;
+        color: black;
+    }
+</style>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2LLP0J8N35"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2LLP0J8N35');
+</script>
+
+<h1>Guess The Words Game</h1>
+<p>Explanation: Bad guesses are when you guess for a letter but the letter is not in a sentence. Your guesses counter goes down. The bad guesses you want to have is how many bad guesses you are allowed to have before you lose.</p>
+<form action="https://www.rafdo.rf.gd/games/guesstheword/2omw/" method="get">
+    <label for="guesses">How many bad guesses do you want to have in your Guess The Words Game: </label>
+    <input type="text" required id="guesses" name="guesses">
+    <input type="hidden" id="words" name="words" value><br><br>
+    <button type="submit">Okay</button>
+</form>
+<script>
+    document.getElementById('words').value = new URLSearchParams(location.search).get('words') || '2'
+</script>
