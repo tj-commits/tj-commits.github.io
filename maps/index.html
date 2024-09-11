@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Rafdo Maps</title>
+  <style>
+    body {
+        margin: 0;
+        overflow: hidden;
+        position: relative;
+    }
+    #map {
+      height: 100vh;
+      width: 100vw;
+      border: none;
+      outline: none;
+    }
+
+    #hegira {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        margin-right: 10px;
+        font-family: "Google Sans", "Roboto", "Arial", sans-serif;
+  font-size: 32px;
+  font-weight: 300;
+  color: #63666a;
+  line-height: 1.375;
+
+          margin-bottom: 1.5rem;
+  text-decoration: none;
+    }
+
+    span {
+    }
+  </style>
+</head>
+
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2LLP0J8N35"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2LLP0J8N35');
+</script>
+
+<body>
+  <iframe id="map" name="map" src="https://api.maptiler.com/maps/881857e1-3230-46d5-b583-3a64d028fc5b/?key=eAaTfcSOIT6KDDCFpkKR#0.3/-30.03713/-22.29452"></iframe>
+  <a id="hegira" href="/">rafdo</a>
+</body>
+</html>
