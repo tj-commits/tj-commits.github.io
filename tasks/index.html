@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    <script defer type="text/javascript" src="script.js"></script>
+    <title>Rafdo Tasks</title>
+  </head>
+  <body>
+    <button onclick="openNav()" class="openbtn">☰</button>
+    <div id="mySidebar" class="sidebar">
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+      <h2 style="text-align:center;">RAFDO PRODUCTIVITY</h2>
+      <br>
+      <a href="https://rafdo-notes.vercel.app">Notes</a>
+      <a href="#">Tasks</a>
+    </div>
+    <center class="container" id="main">
+      <h1>Rafdo Tasks</h1>
+      <form class="task-form">
+        <input
+          type="text"
+          class="task-input"
+          placeholder="Task name (e.g. Mow lawn)"
+        />
+        <button type="submit" class="add-button">Add</button>
+      </form>
+      <ul class="task-items"></ul>
+      <div class="bar"></div>
+      <br><br><br><br><br>
+      <h2 style="margin-bottom: 20px;">Completed</h2>
+      <ul class="checked-task-items"></ul>
+    </center>
+  </body>
+</html>
