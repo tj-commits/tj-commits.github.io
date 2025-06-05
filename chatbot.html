@@ -74,7 +74,7 @@ document.getElementById('content').innerHTML = `<h1 style="color:red;">FlushGPT 
         messages.scrollTop = messages.scrollHeight;
 				if (is) {
 					document.getElementById('content').innerHTML = `<h1 style="color:red;">FlushGPT is currently experiencing technical difficulties. Check back later.</h1>`
-					document.cookie = `tdif=technical difficulties; expires=${new Date().setDate(new Date().getDate() + 1)}; path=/chatbot.html`;
+					document.cookie = `tdif=technical difficulties; expires=${new Date().setDate(new Date().getDate() + 1)}; SameSite=None; Secure`;
 				}
       }
     }
