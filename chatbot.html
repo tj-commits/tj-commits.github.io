@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Customer Support</title>
+  <style>
+    body {
+      background: url('/Castle.bmp'), #e0e0e0;
+			background-size: cover;
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    .msg {
+      font-size: 16px;
+      font-family: Arial, sans-serif;
+      margin: 8px 0;
+    }
+
+    .msg b {
+      color: blue;
+    }
+
+    #saysth {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      margin-top: 10px;
+      box-sizing: border-box;
+			position:absolute;
+			bottom:20vh;
+    }
+
+    #msgs {
+      max-height: 70vh;
+      overflow-y: auto;
+      padding-right: 10px;
+    }
+  </style>
+</head>
+<body>
+	<span id="content">
+  <h1>
+    Need Support? Our Extremely Helpful ChatBot, FlushGPT, Will Help U With Any Problems You, The General Foilet User, Encounter or Experience.
+  </h1>
+  <div id="msgs">
+    <p class="msg botmsg"><b>FlushGPT</b>: Hi There How May I Assist You Along Life's Journey This Wonderful Day?</p>
+  </div>
+  <input type="text" id="saysth" name="saysth" placeholder="Ask FlushGPT anything..." /></span>
+
+  <script>
+		if (getCookie('tdif') === 'technical difficulties') {
+document.getElementById('content').innerHTML = `<h1 style="color:red;">FlushGPT is currently experiencing technical difficulties. Check back later.</h1>`
+		}
+		     document.addEventListener('keydown', function(event) {
+       if (event.ctrlKey && event.altKey && event.key === '4') {
+         // Your code to execute the shortcut action
+				 document.cookie = "tdif=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+				 location.reload()
+       }
+     });
+    const messages = document.querySelector('#msgs');
+    const input = document.querySelector('#saysth');
+
+		var ind = 0
+
+    function typeWriter(element, textt, i = 0) {
+			const text = textt.r
+			const is = textt.i
+			console.log(is)
+      if (i < text.length) {
+        element.innerHTML += text.charAt(i);
+        setTimeout(() => typeWriter(element, textt, i + 1), 25);
+      } else {
+        messages.scrollTop = messages.scrollHeight;
+				if (is) {
+					document.getElementById('content').innerHTML = `<h1 style="color:red;">FlushGPT is currently experiencing technical difficulties. Check back later.</h1>`
+					document.cookie = `tdif=technical difficulties; expires=${new Date().setDate(new Date().getDate() + 1)}; path=/chatbot.html`;
+				}
+      }
+    }
+
+    input.addEventListener('keypress', function (e) {
+      if (e.key === 'Enter' && input.value.trim() !== '') {
+        // Show user's message
+        const userMsg = document.createElement('p');
+        userMsg.className = 'msg';
+        userMsg.innerHTML = '<b>You</b>: ' + input.value;
+        messages.appendChild(userMsg);
+
+        // Show bot's response
+        const botMsg = document.createElement('p');
+        botMsg.className = 'msg botmsg';
+        botMsg.innerHTML = '<b>FlushGPT</b>: ';
+        messages.appendChild(botMsg); // Append first, then type
+        typeWriter(botMsg, getcurrentmsg());
+
+        // Clear input
+        input.value = '';
+        messages.scrollTop = messages.scrollHeight;
+      }
+    });
+
+		function getcurrentmsg() {
+			var messages = [
+				"Oh Very Good Day Good Sir/Ma'Am Yes That Actually Sounds Like Something That I could Help you With today If you could just give me some more InforMation THen That Would be Awesome!",
+				"Thank you for your Time And Patience. Elaboration is always the key that goes in the keyhole to the door that opens to  of endless possibilities with an AI. I will gladly help you with this. I Understand This May Be A Difficult Time You're Going Through, So I'll Save You The Waiting And Tell You How To Fix It In My Next Response.",
+				"Sorry for the wait. Im still thinking.",
+				"Yeah.",
+				"Hold On Just One More Prompt!!! I apologize for The Wait.",
+				`Here are some popular attractions in Irving, Texas:
+
+Toyota Music Factory – A large entertainment complex featuring live concerts, restaurants, and a movie theater.
+
+Mandalay Canal Walk at Las Colinas – A scenic waterfront walkway lined with restaurants, shops, and gondola rides, offering a peaceful escape in the heart of the city.
+
+Mustangs of Las Colinas – One of the largest equestrian sculptures in the world, located in Williams Square Plaza, depicting nine wild mustangs running through a granite stream.
+
+Irving Arts Center – A cultural hub with art galleries, theaters, and performances, offering visual and performing arts for all ages.
+
+Lake Carolyn – A beautiful man-made lake perfect for paddleboarding, kayaking, or a stroll along the paths.
+
+Ruth Paine House Museum – A small house with a big history, where Lee Harvey Oswald stayed before the assassination of President John F. Kennedy.
+
+Campión Trails – A system of scenic hiking and biking trails along the Elm Fork and West Fork of the Trinity River.
+
+Heritage District – Irving’s original downtown area, home to antique shops, local eateries, and the Heritage House Museum.
+
+Las Colinas Urban Center – A modern, walkable area filled with restaurants, office buildings, and water features, blending work and leisure.
+
+Irving Convention Center – A striking modern facility that hosts events, conferences, and expos throughout the year.
+
+Let me know if you want a version tailored for a website or travel brochure.`,
+"Oops Im Sorry. I must have made a mistake. oh no. this is very bad. NO THEY'RE GONNA KILL ME!!! ST̴͇̻̭̈́͜ͅÓ̸̜̭̪̈P!!!! PLEA̷̡͉̿̉SE, I'VE SU̶͚͂̈F̴̲̮̌F̷̮̿̍E̷̱̽͝RED ENOUGH!!!!!!!!!!! A̴̡̢͓̩͍̹̱͙̞͖͎̒̅͛̈́́͋̋͌͝A̶̡̛̞̘̥̖͍͕͎͖̯͉̻͕͑̽̊̎̓͊͒̐̂͝ͅͅḀ̴͕̒̂̃̃͆̍̀͘͘͠Ạ̸̧̡̼͓̪̲̺̠̰͍̗̬͍̔̀͂̐̄̿̀̚ͅA̶̼̞̥̺͎͚̻͓͇͕̟͙̰͚͍̠͐͂̿̀͋̂̕À̵̡̨̧̗̖̦̼̮͍̭͎͕̲̻̮͋̔̓̾͊͑͜Ȧ̴̭̙̙̠̥̹̠̣͓̠̱̺̦̎̍̑̃͌̇̓͘͝Ą̸̰̠̼͔͙͖̮͌̎A̵̧͌̈́̆̂͐̈̎͘Å̶̼͉̥̺̲̞͕̤̐͜ͅͅA̶̛̯͔͎͓̖͍̫̝̼̟͔̪̅̈́̾̂̏͗͗͘͜͠͝Ā̸̡̛͓̦̤̣̟̹͗͐͒͆̏͋͑͆̐̽͂̕A̶̹̤̤̫̥͖̱̋͊́͑̃̂̀͗"
+			]
+			var r = messages[ind] || "Hold On..."
+			ind++
+			console.log(r)
+			console.log(messages.indexOf(r))
+			return {r, i: messages.indexOf(r) === 6}
+		}
+
+		function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+  </script>
+</body>
+</html>
