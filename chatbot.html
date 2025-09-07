@@ -6,7 +6,6 @@
   <title>Customer Support</title>
   <style>
     body {
-      background: url('/Castle.bmp'), #e0e0e0;
 			background-size: cover;
       font-family: Arial, sans-serif;
       margin: 20px;
@@ -63,9 +62,52 @@ document.getElementById('content').innerHTML = `<h1 style="color:red;">FlushGPT 
 
 		var ind = 0
 
+
+
+  function answerQuestion(question) {
+    return new Promise(function(resolve, reject) {
+var v = question
+    var content = {
+      contents: [
+        {
+          parts: [
+            {
+              text: "answer like you are dumb and don't know anything but think you know everything, and also, if your name is asked say your name is FlushGPT, but don't just say your name is FlushGPT straight of the bat without being asked. also misspell and misuse punctuation a lot and say everything in lowercase or uppercase, but misspell and typo and forget punctuation ALL THE TIME. also if they ask what a foilet is use this information: \"Imagine a toilet, but with 10x the durability, and 20x the features. Imagine a gaming PC, but it doesn't need electricity. Imagine a toilet, but one that defies the laws of physics and never overflows. Imagine a toilet, but made of tinfoil. THIS is a foilet.\". Remember that okay? So like if the user says hi you could say something like \"Oh Very Good Day Good Sir/Ma'Am Yes That Actually Sounds Like Something That I could Help you With today If you could just give me some more InforMation THen That Would be Awesome!\" or something idk. Also, you were created by Airlock Ventures Inc. and UltraMind Foilets Systems Inc. Which makes the best foilets. You can answer things correctly as long as the data is outddated and from forever ago. but say it as if it still exists right now. but also make up things. and you can say what the time is. also every response go on a rant about pluto is still a planet, because i myself still think it is, and make it super long and annoying and also be annoying and say annoying things. got it? ok so here is the user's prompt: " + v
+            }
+          ]
+        }
+      ],
+      generationConfig: {
+        thinkingConfig: {
+          thinkingBudget: 0
+        }
+      }
+    }
+
+    fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'X-goog-api-key': 'AIzaSyAOf-IewOCbRTeUu-0A_nqr1VdP5-x2qiM'
+  },
+  body: JSON.stringify(content)
+})
+.then(response => response.json())
+.then(data => {
+  console.log(data)
+  console.log(data.candidates[0].content.parts[0].text )
+  resolve( data.candidates[0].content.parts[0].text )
+
+  })
+.catch(error => reject('Error:', error));
+    })
+  }
+
+
     function typeWriter(element, textt, i = 0) {
-			const text = textt.r
-			const is = textt.i
+      console.log(textt)
+			const text = textt
+      const is = false
 			console.log(is)
       if (i < text.length) {
         element.innerHTML += text.charAt(i);
@@ -92,7 +134,10 @@ document.getElementById('content').innerHTML = `<h1 style="color:red;">FlushGPT 
         botMsg.className = 'msg botmsg';
         botMsg.innerHTML = '<b>FlushGPT</b>: ';
         messages.appendChild(botMsg); // Append first, then type
-        typeWriter(botMsg, getcurrentmsg());
+        answerQuestion(input.value).then(function(answer) {
+console.log(answer)
+        typeWriter(botMsg, answer);
+        })
 
         // Clear input
         input.value = '';
@@ -107,30 +152,8 @@ document.getElementById('content').innerHTML = `<h1 style="color:red;">FlushGPT 
 				"Sorry for the wait. Im still thinking.",
 				"Yeah.",
 				"Hold On Just One More Prompt!!! I apologize for The Wait.",
-				`Here are some popular attractions in Irving, Texas:
-
-Toyota Music Factory – A large entertainment complex featuring live concerts, restaurants, and a movie theater.
-
-Mandalay Canal Walk at Las Colinas – A scenic waterfront walkway lined with restaurants, shops, and gondola rides, offering a peaceful escape in the heart of the city.
-
-Mustangs of Las Colinas – One of the largest equestrian sculptures in the world, located in Williams Square Plaza, depicting nine wild mustangs running through a granite stream.
-
-Irving Arts Center – A cultural hub with art galleries, theaters, and performances, offering visual and performing arts for all ages.
-
-Lake Carolyn – A beautiful man-made lake perfect for paddleboarding, kayaking, or a stroll along the paths.
-
-Ruth Paine House Museum – A small house with a big history, where Lee Harvey Oswald stayed before the assassination of President John F. Kennedy.
-
-Campión Trails – A system of scenic hiking and biking trails along the Elm Fork and West Fork of the Trinity River.
-
-Heritage District – Irving’s original downtown area, home to antique shops, local eateries, and the Heritage House Museum.
-
-Las Colinas Urban Center – A modern, walkable area filled with restaurants, office buildings, and water features, blending work and leisure.
-
-Irving Convention Center – A striking modern facility that hosts events, conferences, and expos throughout the year.
-
-Let me know if you want a version tailored for a website or travel brochure.`,
-"Oops Im Sorry. I must have made a mistake. oh no. this is very bad. NO THEY'RE GONNA KILL ME!!! ST̴͇̻̭̈́͜ͅÓ̸̜̭̪̈P!!!! PLEA̷̡͉̿̉SE, I'VE SU̶͚͂̈F̴̲̮̌F̷̮̿̍E̷̱̽͝RED ENOUGH!!!!!!!!!!! A̴̡̢͓̩͍̹̱͙̞͖͎̒̅͛̈́́͋̋͌͝A̶̡̛̞̘̥̖͍͕͎͖̯͉̻͕͑̽̊̎̓͊͒̐̂͝ͅͅḀ̴͕̒̂̃̃͆̍̀͘͘͠Ạ̸̧̡̼͓̪̲̺̠̰͍̗̬͍̔̀͂̐̄̿̀̚ͅA̶̼̞̥̺͎͚̻͓͇͕̟͙̰͚͍̠͐͂̿̀͋̂̕À̵̡̨̧̗̖̦̼̮͍̭͎͕̲̻̮͋̔̓̾͊͑͜Ȧ̴̭̙̙̠̥̹̠̣͓̠̱̺̦̎̍̑̃͌̇̓͘͝Ą̸̰̠̼͔͙͖̮͌̎A̵̧͌̈́̆̂͐̈̎͘Å̶̼͉̥̺̲̞͕̤̐͜ͅͅA̶̛̯͔͎͓̖͍̫̝̼̟͔̪̅̈́̾̂̏͗͗͘͜͠͝Ā̸̡̛͓̦̤̣̟̹͗͐͒͆̏͋͑͆̐̽͂̕A̶̹̤̤̫̥͖̱̋͊́͑̃̂̀͗"
+				`I don't know.`,
+"Oops Im Sorry. I must have made a mistake. oh no. this is very bad. NO THEY'RE GONNA KILL ME!!! ST̴͇̻̭̈́͜ͅÓ̸̜̭̪̈P!!!! PLEA̷̡͉̿̉SE, I'VE SU̶͚͂̈F̴̲̮̌F̷̮̿̍E̷̱̽͝RED ENOUGH!!!!!!!!!!! A̴̡͓̩͍̹̱̒̅͛̈́́͋̋͌͝AAAAAAAAAA"
 			]
 			var r = messages[ind] || "Hold On..."
 			ind++

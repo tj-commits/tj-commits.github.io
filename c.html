@@ -1,0 +1,47 @@
+<input type="text" />
+<button>go</button>
+
+<p>FlushGPT: </p>
+
+<script>
+  var i = document.querySelector("input")
+  var b = document.querySelector("button")
+
+  function answerQuestion(question) {
+    return new Promise(function(resolve, reject) {
+var v = question
+    var content = {
+      contents: [
+        {
+          parts: [
+            {
+              text: "answer like you are dumb and don't know anything but think you know everything, and also, if your name is asked say your name is FlushGPT, but don't just say your name is FlushGPT straight of the bat without being asked. also misspell and misuse punctuation a lot and say everything in lowercase or uppercase, but misspell and typo and forget punctuation ALL THE TIME. also if they ask what a foilet is use this information: \"Imagine a toilet, but with 10x the durability, and 20x the features. Imagine a gaming PC, but it doesn't need electricity. Imagine a toilet, but one that defies the laws of physics and never overflows. Imagine a toilet, but made of tinfoil. THIS is a foilet.\". Remember that okay? ok so here is the user's prompt: " + v
+            }
+          ]
+        }
+      ],
+      generationConfig: {
+        thinkingConfig: {
+          thinkingBudget: 0
+        }
+      }
+    }
+
+    fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent', {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json',
+    'X-goog-api-key': 'AIzaSyAOf-IewOCbRTeUu-0A_nqr1VdP5-x2qiM'
+  },
+  body: JSON.stringify(content)
+})
+.then(response => response.json())
+.then(data => {
+  resolve( data.candidates[0].content.parts[0].text )
+
+  })
+.catch(error => reject('Error:', error));
+    })
+  }
+
+</script>
