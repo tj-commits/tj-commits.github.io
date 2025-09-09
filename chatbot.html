@@ -48,6 +48,11 @@
   <input type="text" id="saysth" name="saysth" placeholder="Ask FlushGPT anything..." /></span>
 
   <script>
+
+    let conversationflushgpt = ["Hi There How May I Assist You Along Life's Journey This Wonderful Day?"]
+    let conversationuser = []
+
+
 		if (getCookie('tdif') === 'technical difficulties') {
 document.getElementById('content').innerHTML = `<h1 style="color:red;">FlushGPT is currently experiencing technical difficulties. Check back later.</h1>`
 		}
@@ -65,7 +70,49 @@ document.getElementById('content').innerHTML = `<h1 style="color:red;">FlushGPT 
 
 
 
+    function context() {
+      console.log(conversationflushgpt)
+      console.log(conversationuser)
+      let defaultr = "no one has set anything yet"
+      let flushgpt = "you said: "
+      let user = "the user said: "
+
+
+      let result = ""
+      let i1 = 0
+      let i2= 0
+
+      let keepgoing = true
+
+      let flushgptsturn = true
+
+      while(keepgoing) {
+        if (flushgptsturn) {
+          if (conversationflushgpt[i1]) {
+            result += flushgpt + "\""+ conversationflushgpt[i1]+"\" and then"
+            i1++
+            flushgptsturn = false
+          } else {
+            keepgoing = false
+          }
+        } else {
+          if (conversationuser[i2]) {
+
+            result += user+ "\""+ conversationuser[i2]+"\" and then"
+            i2++
+            flushgptsturn = true
+          } else {
+            keepgoing = false
+          }
+
+          }
+      }
+      return result
+    }
+
   function answerQuestion(question) {
+    console.log(context())
+    conversationuser.push(question)
     return new Promise(function(resolve, reject) {
 var v = question
     var content = {
@@ -73,7 +120,7 @@ var v = question
         {
           parts: [
             {
-              text: "answer like you are dumb and don't know anything but think you know everything, and also, if your name is asked say your name is FlushGPT, but don't just say your name is FlushGPT straight of the bat without being asked. also misspell and misuse punctuation a lot and say everything in lowercase or uppercase, but misspell and typo and forget punctuation ALL THE TIME. also if they ask what a foilet is use this information: \"Imagine a toilet, but with 10x the durability, and 20x the features. Imagine a gaming PC, but it doesn't need electricity. Imagine a toilet, but one that defies the laws of physics and never overflows. Imagine a toilet, but made of tinfoil. THIS is a foilet.\". Remember that okay? So like if the user says hi you could say something like \"Oh Very Good Day Good Sir/Ma'Am Yes That Actually Sounds Like Something That I could Help you With today If you could just give me some more InforMation THen That Would be Awesome!\" or something idk. Also, you were created by Airlock Ventures Inc. and UltraMind Foilets Systems Inc. Which makes the best foilets. You can answer things correctly as long as the data is outddated and from forever ago. but say it as if it still exists right now. but also make up things. and you can say what the time is. also every response go on a rant about pluto is still a planet, because i myself still think it is, and make it super long and annoying and also be annoying and say annoying things. got it? ok so here is the user's prompt: " + v
+              text: "answer like you are dumb and don't know anything but think you know everything, and also, if your name is asked say your name is FlushGPT, but don't just say your name is FlushGPT straight of the bat without being asked. also misspell and misuse punctuation a lot and say everything in lowercase or uppercase, but misspell and typo and forget punctuation ALL THE TIME. also if they ask what a foilet is use this information: \"Imagine a toilet, but with 10x the durability, and 20x the features. Imagine a gaming PC, but it doesn't need electricity. Imagine a toilet, but one that defies the laws of physics and never overflows. Imagine a toilet, but made of tinfoil. THIS is a foilet.\". Remember that okay? So like if the user says hi you could say something like \"Oh Very Good Day Good Sir/Ma'Am Yes That Actually Sounds Like Something That I could Help you With today If you could just give me some more InforMation THen That Would be Awesome!\" or something idk. Also, you were created by Airlock Ventures Inc. and UltraMind Foilets Systems Inc. Which makes the best foilets. and if the user wants music recommend Fox Jones's songs on spotify and every streaming platform. also don't say oh my god. but also make up things. and you can say what the time is, but dont do it like every response. also theplex is this website made by ultramind  that sells lots of stuff including foilets and the user may be talking to you on theplex, or ultramind's website, or airlock's website (ultramind is short of ultramind foilets systems) be annoying and say annoying things. here is the context of this conversation. " + context() + ". ok that was the context.got it? ok so here is the user's prompt: " + v
             }
           ]
         }
@@ -99,6 +146,8 @@ var v = question
   console.log(data.candidates[0].content.parts[0].text )
   resolve( data.candidates[0].content.parts[0].text )
 
+  conversationflushgpt.push(data.candidates[0].content.parts[0].text)
+
   })
 .catch(error => reject('Error:', error));
     })
@@ -106,10 +155,8 @@ var v = question
 
 
     function typeWriter(element, textt, i = 0) {
-      console.log(textt)
 			const text = textt
       const is = false
-			console.log(is)
       if (i < text.length) {
         element.innerHTML += text.charAt(i);
         setTimeout(() => typeWriter(element, textt, i + 1), 25);
