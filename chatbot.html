@@ -241,6 +241,19 @@ console.log(answer)
 <body><header class="global-header">
     <a href="https://theplex.page.gd/flushgpt/" class="header-title">FLUSHGPT™ SUITE</a>
     </header>
+	<script>function isPageInIframe() {
+  return window.self !== window.top;
+}
+
+// Example usage:
+if (isPageInIframe()) {
+  console.log("This page is loaded inside an iframe.");
+  // Perform actions specific to being in an iframe
+	document.querySelector('.global-header').remove()
+} else {
+  console.log("This page is loaded directly in the browser window.");
+  // Perform actions specific to being a top-level page
+}</script>
     <div class="chat-container">
         <div class="chat-header">
             FlushGPT 3.0
