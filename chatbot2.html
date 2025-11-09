@@ -1,13 +1,12 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FlushGPT 3.0</title>
-    <link rel="stylesheet" href="style.css">
-        <link rel="stylesheet" href="global.css">
-        <style>
+    <title>FlushGPT 3.0 Pro</title> 
+    <link rel="stylesheet" href="style2.css">
+    <link rel="stylesheet" href="global.css">
+    <style>
         .model-switcher {
             padding: 8px 10px;
             background-color: #f0f0f0;
@@ -31,34 +30,33 @@
     </style>
 </head>
 
-<body><header class="global-header">
-    <a href="https://theplex.page.gd/flushgpt/" class="header-title">FLUSHGPT™ SUITE</a>
+<body>
+    <header class="global-header">
+        <a href="https://theplex.page.gd/flushgpt/" class="header-title">FLUSHGPT™ SUITE</a>
     </header>
-	<script>function isPageInIframe() {
-  return window.self !== window.top;
-}
+    <script>
+        function isPageInIframe() {
+            return window.self !== window.top;
+        }
 
-// Example usage:
-if (isPageInIframe()) {
-  console.log("This page is loaded inside an iframe.");
-  // Perform actions specific to being in an iframe
-	document.querySelector('.global-header').remove()
-} else {
-  console.log("This page is loaded directly in the browser window.");
-  // Perform actions specific to being a top-level page
-}</script>
+        if (isPageInIframe()) {
+            console.log("This page is loaded inside an iframe.");
+            document.querySelector('.global-header').remove()
+        } else {
+            console.log("This page is loaded directly in the browser window.");
+        }
+    </script>
     <div class="chat-container">
         <div class="chat-header">
-            FlushGPT 3.0 Flash
-
+            FlushGPT 3.0 Pro 
         </div>
-         <div class="model-switcher">
+        <div class="model-switcher">
             <label for="model-select">Model:</label>
             <select id="model-select">
                 <option value="chatbot2.html" selected>FlushGPT 3.0 Pro (Our Most Advanced Model)</option>
 
                 <option value="chatbot.html">FlushGPT 3.0 Flash (Fastest, Ideal for Quick Chats)</option>
-                <option value="chatbot_nano.html" selected>FlushGPT 3.0 Nano (Smallest, Basic)</option>
+                <option value="chatbot_nano.html">FlushGPT 3.0 Nano (Smallest, Basic)</option>
             </select>
         </div>
         <div class="chat-messages" id="chat-messages">
@@ -66,8 +64,8 @@ if (isPageInIframe()) {
                 Hello! I'm FlushGPT. Ask me a question about anything! I'm here to simulate a helpful conversation.
             </div>
             <div class="message bot-message typing-indicator" id="typing-indicator" style="display: none;">
-    ...
-</div>
+                ...
+            </div>
         </div>
         <div class="chat-input-area">
             <input type="text" id="user-input" placeholder="Type your message...">
@@ -103,6 +101,7 @@ if (isPageInIframe()) {
             });
         });
     </script>
-    <script src="script.js"></script>
+    
+    <script src="script2.js"></script>
 </body>
 </html>
