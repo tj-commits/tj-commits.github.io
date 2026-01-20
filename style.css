@@ -79,7 +79,7 @@ body {
     font-size: 1em;
 }
 
-#send-button {
+#send-button, #skip-button {
     background-color: #28a745; /* Green Send Button */
     color: white;
     border: none;
@@ -89,7 +89,7 @@ body {
     transition: background-color 0.2s;
 }
 
-#send-button:hover {
+#send-button:hover, #skip-button:hover {
     background-color: #218838;
 }
 

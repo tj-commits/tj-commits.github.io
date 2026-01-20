@@ -41,6 +41,7 @@
 // Example usage:
 if (isPageInIframe()) {
   console.log("This page is loaded inside an iframe.");
+  console.log("hi ultramind")
   // Perform actions specific to being in an iframe
 	document.querySelector('.global-header').remove()
 } else {
@@ -51,7 +52,7 @@ if (isPageInIframe()) {
         <div class="chat-header">
             FlushGPT 3.0 Flash
 
-        </div>
+        </div><!--
          <div class="model-switcher">
             <label for="model-select">Model:</label>
             <select id="model-select">
@@ -60,7 +61,7 @@ if (isPageInIframe()) {
                 <option value="chatbot.html">FlushGPT 3.0 Flash (Fastest, Ideal for Quick Chats)</option>
                 <option value="chatbot_nano.html" selected>FlushGPT 3.0 Nano (Smallest, Basic)</option>
             </select>
-        </div>
+        </div>-->
         <div class="chat-messages" id="chat-messages">
             <div class="message bot-message">
                 Hello! I'm FlushGPT. Ask me a question about anything! I'm here to simulate a helpful conversation.
@@ -69,10 +70,11 @@ if (isPageInIframe()) {
     ...
 </div>
         </div>
-        <div class="chat-input-area">
-            <input type="text" id="user-input" placeholder="Type your message...">
-            <button id="send-button">Send</button>
-        </div>
+       <div class="chat-input-area">
+    <input type="text" id="user-input" placeholder="Type your message...">
+    <button id="send-button">Send</button>
+    <button id="skip-button" style="display: none;">Skip</button>
+</div>
     </div>
 
     <script>
