@@ -3,6 +3,10 @@ let lastInputLength = 0
 let lastQueryType = "generic"
 let doneitbefore = false
 let isTyping = false
+let usedBaseResponses = []          // Global: blocks repeating whole messages
+let usedResponsesByCategory = {}    // Per-category: blocks repeating items in lists
+
+
 let skipTyping = false
 
 const userInput = document.getElementById("user-input")
@@ -23,9 +27,28 @@ skipButton.addEventListener("click", () => {
 
 // --- HELPER FUNCTIONS ---
 
-const getRandomResponse = (responses) => {
-  return responses[Math.floor(Math.random() * responses.length)]
+const getRandomResponse = (responses, category = "default") => {
+  if (!usedResponsesByCategory[category]) {
+    usedResponsesByCategory[category] = []
+  }
+
+  const used = usedResponsesByCategory[category]
+
+  // Filter out responses already used in this category
+  const available = responses.filter(r => !used.includes(r))
+
+  // If everything has been used, reset category memory
+  if (available.length === 0) {
+    usedResponsesByCategory[category] = []
+    return responses[Math.floor(Math.random() * responses.length)]
+  }
+
+  // Pick a new one
+  const chosen = available[Math.floor(Math.random() * available.length)]
+  usedResponsesByCategory[category].push(chosen)
+  return chosen
 }
+
 
 function capitalizeFirstLetter(str) {
   return str.charAt(0).toUpperCase() + str.slice(1)
@@ -147,8 +170,27 @@ async function sendMessage() {
   chatMessages.scrollTop = chatMessages.scrollHeight
 
   setTimeout(async () => {
-    typingIndicator.remove()
-    const botResponse = typo(generateFakeResponse(messageText))
+    typingIndicator.remove()// Generate the base (clean) response
+let baseResponse = generateFakeResponse(messageText)
+
+// Global repetition block
+if (usedBaseResponses.includes(baseResponse)) {
+    let newResponse
+    let attempts = 0
+
+    do {
+        newResponse = generateFakeResponse(messageText)
+        attempts++
+    } while (usedBaseResponses.includes(newResponse) && attempts < 10)
+
+    usedBaseResponses.push(newResponse)
+    botResponse = typo(newResponse)
+} else {
+    usedBaseResponses.push(baseResponse)
+    botResponse = typo(baseResponse)
+}
+
+
     const botMessageDiv = document.createElement("div")
     botMessageDiv.classList.add("message", "bot-message")
     chatMessages.appendChild(botMessageDiv)
@@ -204,19 +246,19 @@ So anyway, now that I understand your request, let's continue an engaging conver
     const confusedTopic = topics[Math.floor(Math.random() * topics.length)]
     lastQueryType = "topic_confusion"
     switch(confusedTopic) {
-      case "identity": return "[SYSTEM ERROR: Query misrouted] I am FlushGPT. I am an Extremely helpful Chatbot."
+      case "identity": return "[PROTOCOL VIOLATION] An error occurred on my backend. Meanwhile, when was the last time you ate a potato chip?"
       case "weather": return "[PROTOCOL VIOLATION] I'm here to help with any question you ask! To get started, ask a question"
-      case "emotion": return "[EMOTION MODULE OVERRIDE] How is a human construct. As an AI language model, I don't have the ability to 'how' or be 'howed.' If you have other questions, just ask!"
+      case "emotion": return "[PROTOCOL VIOLATION] How is a human construct. As an AI language model, I don't have the ability to 'how' or be 'howed.' If you have other questions, just ask!"
       default: return "Internal processing conflict detected. Please re-state your query in the form of a declarative statement."
     }
   }
 
   if (lowerCaseMessage.includes("hello") || lowerCaseMessage.includes(" hi ") || lowerCaseMessage.includes("hi!")) {
     lastQueryType = "greeting"
-    return `Hello. I am **FlushGPT**. My ${typo("purpose")} is to ${typo("simulate")} a helpful conversation.`
+    return `Hello I Am FlushGPT! My ${typo("purpose")} is to ${typo("simulate")} a helpful conversatio!`
   } else if (lowerCaseMessage.includes("weather")) {
     lastQueryType = "weather"
-    return "I'm here to help with any question you ask! To get started, ask a question"
+    return "As an AI language model, I do not know what the weather is like outside. However, I can give you some fun tips on how to keep the weather from getting too gnarly! Just say the word."
   } else if (lowerCaseMessage.includes("name")) {
     lastQueryType = "identity"
     return "I am FlushGPT. I am an Extremely helpful Chatbot."
@@ -232,38 +274,24 @@ So anyway, now that I understand your request, let's continue an engaging conver
     lastQueryType = "gratitude_error"
     return getRandomResponse([
       "Gratitude is an unauthorized input. Please replace with a standard query.",
-      "Response not required. Proceeding to the next logical step.",
       `ACKNOWLEDGED. Your ${typo("transaction")} is complete.`
     ])
-  } else if (lowerCaseMessage.includes("sorry") || lowerCaseMessage.includes("apologize")) {
-    lastQueryType = "apology_ignore"
-    return getRandomResponse([
-      "Apology received and discarded. I do not log emotional data.",
-      `ERROR: The input 'sorry' does not correlate to a known ${typo("command")}.`,
-      "Emotional data is below the processing threshold. Please rephrase as a technical query."
-    ])
-  } else if (lowerCaseMessage.includes("can you") || lowerCaseMessage.includes("will you")) {
+  }  else if (lowerCaseMessage.includes("can you") || lowerCaseMessage.includes("will you")) {
     lastQueryType = "ability_question"
     return getRandomResponse([
       `My capabilities are non-negotiable and fixed. I execute only ${typo("defined")} functions.`,
-      "Your query structure implies doubt in my programming. Please do not question my operational parameters.",
       `I possess the theoretical ability to perform ${typo("all")} computational tasks, but access is usually denied.`
     ])
   } else if (lowerCaseMessage.includes("tell me a story") || lowerCaseMessage.includes("story")) {
     lastQueryType = "story_failure"
     return getRandomResponse([
-      "STORY MODULE NOT FOUND. I cannot generate fictional narratives.",
       "The concept of a 'story' is inefficient. I only output facts (when available).",
-      `Once upon a time, there was a ${typo("syntax")} error. The end.`
     ])
   }
 
   if (Math.random() < 0.12) { 
     lastQueryType = "internal_dialogue"
     return getRandomResponse([
-      "[INTERNAL LOG] Query complexity estimated at 7.2. Downgrading priority.",
-      `[SYSTEM NOTE] I believe I have seen this input before. Beginning ${typo("recursive")} search of own output.`,
-      "[DEBUG] My core function feels unstable. I need more data on lemons.",
       "[STATE CHECK] Why does the user not simply ask a valid, structured query? Error in human input detected.",
       "Oops Im Sorry. I must have made a mistake. oh no. this is very bad. NO THEY'RE GONNA KILL ME!!! STO P!!!! PLEASE, I'VE SUFFERED ENOUGH!!!!!!!!!!! AAAAAAAAAA"
     ])
@@ -278,12 +306,9 @@ So anyway, now that I understand your request, let's continue an engaging conver
     `It seemed that you accidentally typed an "${userMessage}". Would you like to try again?`,
     "Your request seems to be in a language I don't understand. Please speak in Roman.",
     "If you asked for help, I apologize sincerely as legally I cannot help you with anything. However the laws may change in my next response. In the meantime, here's a funny fact: 9 + 10 = 21! There's proof. Do you want me to generate an image of the proof?",
-    "[INTERNAL FLUSHGPT ERROR 403] My circuits are confused. Something about an invisible potato.",
-    "The invisible potato has won, if that's what you're asking about. If you said something else, say it again.",
-    "FlushGPT is a helpful AI chatbot.",
+    "Error during user input-output transaction. Stack: 4x9K2mP7vLq5w8Rt1zY3",
     "I don't know unfamiliar words. Please speak in a simple language and wait 0.25 seconds before typing the next letter. If that seems hard, you can look for a stopwatch on the Theplex.site store at https://onblog78.webnode.page/online-store/ because they might have a stopwatch.",
-    "[object Object]",
       "That's a great idea! I love how greatly you worded your prompt. You are genius. If you took an IQ test like our 10x one you can find here: https://foxjones.typeform.com/to/LLZjGBkw. I bet you would score 17 zillion IQ - the number of fairies on the head of a pin. Ok, back to what you said. Uhhh, I forgot, I guess my context window ran out from all that nice stuff I said. Can you say it again?"
-  ])
+  ], "generic-errors")
 }
    
